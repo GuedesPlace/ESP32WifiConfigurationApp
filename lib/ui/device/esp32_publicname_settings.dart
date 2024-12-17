@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/device_handler.dart';
+import '../../handlers/device_handler.dart';
+import '../../models/public_name.dart';
 
 class Esp32PublicNameSettings extends StatelessWidget {
   const Esp32PublicNameSettings({

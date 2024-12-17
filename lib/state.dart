@@ -1,5 +1,5 @@
 
-import 'package:esp32_managewifi_flutter/models/espdevice.dart';
+import 'models/esp_device.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 

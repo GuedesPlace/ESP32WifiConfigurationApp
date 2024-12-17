@@ -1,10 +1,12 @@
-import 'package:esp32_managewifi_flutter/models/device_handler.dart';
-import 'package:esp32_managewifi_flutter/models/espdevice.dart';
-import 'package:esp32_managewifi_flutter/ui/device/esp32_publicname_settings.dart';
-import 'package:esp32_managewifi_flutter/ui/device/esp32_wlan_settings.dart';
-import 'package:esp32_managewifi_flutter/ui/device/wifi_status.dart';
+import '../handlers/device_handler.dart';
+import '../models/esp_device.dart';
+import 'device/esp32_publicname_settings.dart';
+import 'device/esp32_wlan_settings.dart';
+import 'device/wifi_status.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../models/device_data_status.dart';
 
 class Esp32DeviceDetailScreen extends StatelessWidget {
   final EspDevice device;

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:esp32_managewifi_flutter/models/device_scan_status.dart';
-import 'package:esp32_managewifi_flutter/models/espdevice.dart';
+import '../models/device_scan_status.dart';
+import '../models/esp_device.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 class DeviceScanner {

@@ -1,11 +1,18 @@
-import 'package:esp32_managewifi_flutter/app.dart';
-import 'package:esp32_managewifi_flutter/models/device_handler.dart';
-import 'package:esp32_managewifi_flutter/models/device_scan_status.dart';
-import 'package:esp32_managewifi_flutter/models/device_scanner.dart';
-import 'package:esp32_managewifi_flutter/models/status_monitor.dart';
+import 'package:esp32_managewifi_flutter/models/esp32_properties.dart';
+
+import 'app.dart';
+import 'handlers/device_handler.dart';
+import 'handlers/device_scanner.dart';
+import 'models/ble_status_monitor.dart';
+import 'models/device_scan_status.dart';
+import 'models/public_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:provider/provider.dart';
+
+import 'models/device_data_status.dart';
+import 'models/wifi_credential.dart';
+import 'models/wifi_status.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +42,9 @@ void main() {
         initialData: WifiCredential(ssid: "",password: "")),
     StreamProvider(
         create: (_) => handler.publicName,
-        initialData: PublicName(publicName: ''))
+        initialData: PublicName(publicName: '')),
+    StreamProvider(
+        create: (_) => handler.espProperties,
+        initialData: Esp32Properties(properties: []))
   ], child: ESP32WifConfiguationApp()));
 }

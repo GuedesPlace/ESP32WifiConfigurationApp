@@ -1,4 +1,4 @@
-import 'package:esp32_managewifi_flutter/models/espdevice.dart';
+import 'esp_device.dart';
 
 class DeviceScanStatus {
   DeviceScanStatus(

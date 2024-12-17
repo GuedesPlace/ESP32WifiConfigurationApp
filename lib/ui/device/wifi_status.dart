@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/device_handler.dart';
+import '../../handlers/device_handler.dart';
+import '../../models/wifi_status.dart';
 
 class WifiStatusWidget extends StatelessWidget {
   const WifiStatusWidget({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
-import 'package:esp32_managewifi_flutter/models/device_handler.dart';
-import 'package:esp32_managewifi_flutter/models/device_scan_status.dart';
-import 'package:esp32_managewifi_flutter/models/device_scanner.dart';
-import 'package:esp32_managewifi_flutter/models/espdevice.dart';
+import '../handlers/device_handler.dart';
+import '../models/device_scan_status.dart';
+import '../handlers/device_scanner.dart';
+import '../models/esp_device.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:provider/provider.dart';
