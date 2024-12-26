@@ -9,7 +9,7 @@ class WifiStatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<WifiStatus>(
-      builder: (context, wifiStatus, __) => Row(
+      builder: (context, wifiStatus, __) => Column(
             children: [Text("WIFI Status: ${wifiStatus.statusName}")],
           ));
 }

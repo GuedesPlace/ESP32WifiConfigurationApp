@@ -1,3 +1,5 @@
+import 'package:esp32_managewifi_flutter/ui/device/esp32_properties_settings.dart';
+
 import '../handlers/device_handler.dart';
 import '../models/esp_device.dart';
 import 'device/esp32_publicname_settings.dart';
@@ -37,7 +39,8 @@ class Esp32DeviceDetailScreen extends StatelessWidget {
                       "${device.title}: ${dataStatus.bleConnected ? "BLE connected" : "BLE not connected"}"),
                   WifiStatusWidget(),
                   Esp32WLANSettings(),
-                  Esp32PublicNameSettings()
+                  Esp32PublicNameSettings(),
+                  Esp32PropertiesSettings()
                 ])),
               )));
 }

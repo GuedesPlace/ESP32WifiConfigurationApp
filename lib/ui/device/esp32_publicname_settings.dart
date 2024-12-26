@@ -10,11 +10,9 @@ class Esp32PublicNameSettings extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) =>
-      Consumer2<DeviceHandler, PublicName>(
-          builder: (context, handler, publicName, __) =>
-              Esp32PublicNameInputWidget(
-                  deviceHandler: handler, publicName: publicName));
+  Widget build(BuildContext context) => Consumer2<DeviceHandler, PublicName>(
+      builder: (context, handler, publicName, __) => Esp32PublicNameInputWidget(
+          deviceHandler: handler, publicName: publicName));
 }
 
 class Esp32PublicNameInputWidget extends StatefulWidget {
@@ -28,11 +26,12 @@ class Esp32PublicNameInputWidget extends StatefulWidget {
       _Esp32PublicNameInputWidgetState();
 }
 
-class _Esp32PublicNameInputWidgetState extends State<Esp32PublicNameInputWidget> {
+class _Esp32PublicNameInputWidgetState
+    extends State<Esp32PublicNameInputWidget> {
   TextEditingController publicNameController = TextEditingController();
   DateTime updateMustBeEarlier = DateTime.now();
   bool waitForAsyncCall = true;
-  
+  bool showCard = false;
 
   @override
   void initState() {
@@ -47,9 +46,11 @@ class _Esp32PublicNameInputWidgetState extends State<Esp32PublicNameInputWidget>
       updateMustBeEarlier = widget.publicName.timeStamp;
       waitForAsyncCall = false;
       publicNameController.text = widget.publicName.publicName;
+      showCard = widget.publicName.available;
     }
     super.didUpdateWidget(oldWidget);
   }
+
   @override
   void dispose() {
     publicNameController.text = "";
@@ -60,8 +61,7 @@ class _Esp32PublicNameInputWidgetState extends State<Esp32PublicNameInputWidget>
     print("OnUpdate");
     updateMustBeEarlier = DateTime.now();
     waitForAsyncCall = true;
-    widget.deviceHandler
-        .updatePublicName(publicNameController.text);
+    widget.deviceHandler.updatePublicName(publicNameController.text);
   }
 
   void onCancel() {
@@ -71,53 +71,54 @@ class _Esp32PublicNameInputWidgetState extends State<Esp32PublicNameInputWidget>
   @override
   Widget build(BuildContext context) {
     Color color = Theme.of(context).primaryColor;
-    return Card(
-      child: Column(children: [
-        ListTile(
-          leading: Icon(Icons.wifi),
-          title: Text("Public Name for Homebridge"),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: waitForAsyncCall
-              ? Column(
-                  children: [
-                    SizedBox(
-                        child: LinearProgressIndicator(
-                      backgroundColor: Colors.grey,
-                      color: color,
-                      minHeight: 10,
-                    )),
-                  ],
-                )
-              : Column(
-                  children: [
-                    TextField(
-                      controller: publicNameController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Name',
-                      ),
-                    ),
-                    
-                  ],
-                ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(onPressed: () => onCancel(), child: Text("Cancel")),
-            SizedBox(
-              width: 8,
+    return Visibility(
+        visible: showCard,
+        child: Card(
+          child: Column(children: [
+            ListTile(
+              leading: Icon(Icons.wifi),
+              title: Text("Public Name for Homebridge"),
             ),
-            TextButton(onPressed: () => onUpdate(), child: Text("Update")),
-            SizedBox(
-              width: 8,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: waitForAsyncCall
+                  ? Column(
+                      children: [
+                        SizedBox(
+                            child: LinearProgressIndicator(
+                          backgroundColor: Colors.grey,
+                          color: color,
+                          minHeight: 10,
+                        )),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        TextField(
+                          controller: publicNameController,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Name',
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(onPressed: () => onCancel(), child: Text("Cancel")),
+                SizedBox(
+                  width: 8,
+                ),
+                TextButton(onPressed: () => onUpdate(), child: Text("Update")),
+                SizedBox(
+                  width: 8,
+                )
+              ],
             )
-          ],
-        )
-      ]),
-    );
+          ]),
+        ));
   }
 }

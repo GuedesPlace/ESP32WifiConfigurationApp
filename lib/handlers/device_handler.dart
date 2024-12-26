@@ -43,7 +43,6 @@ class DeviceHandler {
   QualifiedCharacteristic? _propertiesCharacteristic;
 
   late StreamSubscription<ConnectionStateUpdate> _connection;
-  late StreamSubscription<List<int>> _characteristic;
 
   void connect(String deviceId) {
     _wifiStatusCharacteristic = null;
@@ -82,7 +81,7 @@ class DeviceHandler {
 
   Future<void> disconnect(String deviceId) async {
     try {
-      await _characteristic.cancel();
+      //await _characteristic.cancel();
       print("CHAR UNSUB DONE");
       await _connection.cancel();
     } on Exception catch (e, _) {
@@ -150,6 +149,7 @@ class DeviceHandler {
       pnObject.success();
       _publicNameStreamController.add(pnObject);
       } catch(e) {
+        print(e);
         _publicNameStreamController.add(PublicName.fromError(e)); 
       }
     }
@@ -160,9 +160,10 @@ class DeviceHandler {
       try {
       final value = await _ble.readCharacteristic(_propertiesCharacteristic!);
       var propertiesFromDevice = String.fromCharCodes(value);
+      print(propertiesFromDevice);
       var propertiesObject =
           Esp32Properties.fromJsonString(propertiesFromDevice);
-      propertiesObject.available = false;
+      propertiesObject.success();
       _propertiesStreamController.add(propertiesObject);
       } catch(e) {
         _propertiesStreamController.add(Esp32Properties.fromError(e));
@@ -192,6 +193,7 @@ class DeviceHandler {
   Future<void> updateProperies(Esp32Properties espProperties) async {
     if (_propertiesCharacteristic != null) {
       final props = jsonEncode(espProperties.toJson());
+      print(props);
       await _ble.writeCharacteristicWithResponse(_propertiesCharacteristic!,
           value: props.codeUnits);
       await readAndProcessPropertiesCharacteristic();
